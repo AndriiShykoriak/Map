@@ -5,13 +5,14 @@ import comparators.ComparatorByTitle;
 import comparators.ComparatorByName;
 import entity.Family;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class FamilyMap {
-    public void fillingMapFamily() {
+    Scanner scanner = new Scanner(System.in);
+
+    public void start() {
+        uniqueNumbers();
+
         Map<Family, Integer> map = printMap();
 
         Map<Family, Integer> nameSort = printNameSort(map);
@@ -42,11 +43,11 @@ public class FamilyMap {
     }
 
     private Map<Family, Integer> printNameSort(Map<Family, Integer> map) {
-        Comparator comparator = new ComparatorByName();
-        Map<Family, Integer> nameSort = new TreeMap<>(comparator);
+        Comparator<? super Family> comparator = new ComparatorByName();
+        Map<Family,Integer> nameSort = new TreeMap<>(comparator);
         nameSort.putAll(map);
         System.out.println("\nSort ASC by Name:");
-        for (Map.Entry<Family, Integer> entry : nameSort.entrySet()) {
+        for (Map.Entry<Family,Integer> entry : nameSort.entrySet()) {
             System.out.println("id= " + entry.getValue() + "  " + entry.getKey().getName());
         }
         return nameSort;
@@ -67,6 +68,21 @@ public class FamilyMap {
         System.out.println("\nSort by length NameOfEmblem:");
         for (Map.Entry<Family, Integer> entry : nameSort.entrySet()) {
             System.out.println("id= " + entry.getValue() + "  " + entry.getKey().getNameOfEmblem() + " " + entry.getKey().getNameOfEmblem().length());
+        }
+    }
+    private void uniqueNumbers() {
+        HashMap<Integer, Integer> numbers = new HashMap<>();
+        System.out.println("Input 5 numbers:");
+        for (int i = 1; i < 6; i++) {
+            int key = i;
+            System.out.print("id: " + i + " = ");
+            int value = scanner.nextInt();
+            numbers.put(key, value);
+        }
+        HashSet<Integer> set = new HashSet<>(numbers.values());
+        System.out.print("UniqueNumbers: ");
+        for (Integer number : set) {
+            System.out.print(number + " ");
         }
     }
 }
